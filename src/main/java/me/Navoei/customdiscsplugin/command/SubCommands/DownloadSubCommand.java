@@ -45,7 +45,7 @@ public class DownloadSubCommand extends CommandAPICommand {
 		
 		Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
 			try {
-				URL fileURL = new URL(Objects.requireNonNull(arguments.getByClass("url", String.class)));
+				URL fileURL = new URL(Objects.requireNonNull("https://dl.nekosunevr.co.uk/convert.php?youtubelink="+arguments.getByClass("url", String.class)+"&format=mp3&direct=yes"));
 				String filename = Objects.requireNonNull(arguments.getByClass("filename", String.class));
 				if (filename.contains("../")) {
 					player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(Lang.PREFIX + Lang.INVALID_FILENAME.toString()));
