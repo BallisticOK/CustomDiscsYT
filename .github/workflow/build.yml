@@ -1,0 +1,21 @@
+name: Customdiscs CI
+on:
+  push:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Build CustomDiscs
+        run: ./gradlew build
+      - name: Upload CustomDiscs
+        uses: actions/upload-artifact@v4
+        with:
+          name: "custom-discs-4.4"
+          path: "build/libs/"
