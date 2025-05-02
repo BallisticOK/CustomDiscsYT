@@ -10,6 +10,7 @@
 
 * ✅ **Paper 1.21.5** (Recommended)
 * ✅ **Paper 1.21.4** (Tested, works as well)
+* ✅ **Paper 1.21.1** (Tested, works as well)
 
 ### 🎧 Features
 
