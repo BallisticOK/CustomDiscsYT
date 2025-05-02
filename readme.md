@@ -5,11 +5,11 @@
 > ⚠️ **Note:** This is an enhanced fork of [henkelmax's Audio Player](https://github.com/henkelmax/audio-player), featuring a new custom downloader system, improved UX, and ongoing support. Maintained by [Athar42](https://github.com/Athar42).
 
 
+
 ### ✅ Compatibility
 
 * ✅ **Paper 1.21.5** (Recommended)
 * ✅ **Paper 1.21.4** (Tested, works as well)
-* ✅ **Paper 1.21.1** (Tested, works as well)
 
 ### 🎧 Features
 
@@ -68,7 +68,11 @@ You’ll need the following plugins installed:
 ---
 
 ### 🎥 Demo
-https://user-images.githubusercontent.com/64107368/178426026-c454ac66-5133-4f3a-9af9-7f674e022423.mp4
+
+<video src="https://user-images.githubusercontent.com/64107368/178426026-c454ac66-5133-4f3a-9af9-7f674e022423.mp4" controls style="max-width: 100%; height: auto;">
+  Your browser does not support the video tag.
+</video>
+
 ---
 
 ### ⚙️ Default Config.yml
