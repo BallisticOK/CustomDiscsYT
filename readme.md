@@ -1,35 +1,79 @@
-# Custom Discs v4.4 for Paper 1.21.5
-
-_This release should also work with Paper 1.21.4_
-
-A Paper fork of henkelmax's Audio Player. Special thanks to Athar42 for maintaining this plugin. 
-- Play custom music discs using the Simple Voice Chat API. (The voice chat mod is required on the client and server.)
-- Use ```/customdisc``` or ```/cd``` to view available commands.
-- Music files should go into ```plugins/CustomDiscs/musicdata/```
-- Music files must be in the ```.wav```, ```.flac```, or ```.mp3``` format.
-
-Downloading Files:
-- To download a file use the command ```/cd download <url> <filename.extension>```. The link used to download a file must be a direct link (meaning the file must automatically begin downloading when accessing the link). Files must have the correct extension specified. An UnsupportedAudioFileException will be thrown in the server's console if the file extension is not correct (for example when giving a wav file the mp3 extension). Below is an example of how to use the command and a link to get direct downloads from Google Drive.
-- Example: ```/cd download https://example.com/mysong mysong.mp3```
-- Direct Google Drive links: https://lonedev6.github.io/gddl/
-
-Set the range of a disc:
-- To set the active range of a playable disc, just use the command ```/cd range <range>```. The range can be between 1 and the max value set in the config file (default : 256)
-- Example: ```/cd range 100```
-
-Permission Nodes (Required to run the commands. Playing discs does not require a permission.):
-- ```customdiscs.create``` to create a disc
-- ```customdiscs.download``` to download a file
-- ```customdiscs.range``` to set the range of the disc
-
-Dependencies:
-- This plugin depends on the latest version of ProtocolLib for 1.21 and SimpleVoiceChatBukkit version 2.5.16. 
 
 
-https://user-images.githubusercontent.com/64107368/178426026-c454ac66-5133-4f3a-9af9-7f674e022423.mp4
+# 🎶 Custom Discs v4.4 for Paper 1.21.5
 
-Default Config.yml:
-```
+> ⚠️ **Note:** This is an enhanced fork of [henkelmax's Audio Player](https://github.com/henkelmax/audio-player), featuring a new custom downloader system, improved UX, and ongoing support. Maintained by [Athar42](https://github.com/Athar42).
+
+
+### ✅ Compatibility
+
+* ✅ **Paper 1.21.5** (Recommended)
+* ✅ **Paper 1.21.4** (Tested, works as well)
+* ✅ **Paper 1.21.1** (Tested, works as well)
+
+### 🎧 Features
+
+* 🎵 Play custom music discs using the Simple Voice Chat API.
+* 💽 Use `/customdisc` or `/cd` to view and manage your custom discs.
+* 📁 Drop music files into `plugins/CustomDiscs/musicdata/`
+* 📂 Supported formats: `.wav`, `.flac`, `.mp3`
+
+---
+
+### ⬇️ Downloading Music Files
+
+To download and register a new song:
+
+* Use the command: ❱ `/cd download <url> <filename.extension>`
+
+💡 The URL must be a **direct download** link — the file should begin downloading immediately.
+
+🔗 Helpful Link for Google Drive direct download formatting: [https://lonedev6.github.io/gddl/](https://lonedev6.github.io/gddl/)
+
+💡 Example: ❱ `/cd download https://example.com/mysong mysong.mp3`
+
+---
+
+### 📡 Set Playback Range
+
+Adjust how far your music disc can be heard:
+
+* ❱ `/cd range <range>`
+
+🧠 The value must be between 1 and the `music-disc-max-distance` (default: 256).
+
+💡 Example: ❱ `/cd range 100`
+
+---
+
+### 🛡️ Permissions
+
+You must have the following permission nodes to run certain commands:
+
+* 🔹 `customdiscs.create` — Create discs
+* 🔹 `customdiscs.download` — Download music
+* 🔹 `customdiscs.range` — Set playback range
+
+🎵 Note: Playing discs does **not** require a permission.
+
+---
+
+### 📦 Dependencies
+
+You’ll need the following plugins installed:
+
+* ✅ [ProtocolLib (latest for 1.21)](https://www.spigotmc.org/resources/protocollib.1997/)
+* ✅ [SimpleVoiceChatBukkit v2.5.16](https://modrinth.com/plugin/simple-voice-chat)
+
+---
+
+### 🎥 Demo
+
+---
+
+### ⚙️ Default Config.yml
+
+```yaml
 # [Music Disc Config]
 
 # The distance from which music discs can be heard in blocks.
@@ -52,8 +96,11 @@ help:
   - "&fGit&0Hub&7: &9&ohttps://github.com/Navoei/CustomDiscs"
 ```
 
-Default Lang.yml:
-```
+---
+
+### 🈯 Default Lang.yml
+
+```yaml
 prefix: "&8[&6CustomDiscs&8]&r"
 no-permission: "&cYou do not have permission to execute this command."
 invalid-filename: "&cThis is an invalid filename!"
@@ -71,8 +118,16 @@ create-disc: "&aCreate a disc by doing &7/cd create %filename% \"Custom Lore\"&a
 download-error: "&cAn error has occurred while downloading."
 now-playing: "&6Now playing: %song_name%"
 disc-converted: "&aConverted disc to new format! &fThis is due to changes in newer Minecraft versions which introduced &7JukeboxPlayableComponent&f."
-invalid-range: "&cYou need to chose a range between 1 and %range_value%"
+invalid-range: "&cYou need to choose a range between 1 and %range_value%"
 create-custom-range: "&7Your range is set to: &a\"%custom_range%\"."
 ```
 
+---
 
+### 🤝 Credits
+
+* 🔧 Plugin Maintainer: [Athar42](https://github.com/Athar42)
+* 🎨 Original Developer: [Henkelmax](https://github.com/henkelmax)
+* 💖 Additional Fixes by: Navoei, alfw
+
+---
