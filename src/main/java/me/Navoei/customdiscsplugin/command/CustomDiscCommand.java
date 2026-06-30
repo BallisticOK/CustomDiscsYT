@@ -4,7 +4,9 @@ import me.Navoei.customdiscsplugin.CustomDiscs;
 import me.Navoei.customdiscsplugin.command.SubCommands.CreateSubCommand;
 import me.Navoei.customdiscsplugin.command.SubCommands.DownloadSubCommand;
 import me.Navoei.customdiscsplugin.command.SubCommands.ReloadSubCommand;
+import me.Navoei.customdiscsplugin.command.SubCommands.RevertCustomModelDataSubCommand;
 import me.Navoei.customdiscsplugin.command.SubCommands.RevertSubCommand;
+import me.Navoei.customdiscsplugin.command.SubCommands.SetCustomModelDataSubCommand;
 import me.Navoei.customdiscsplugin.command.SubCommands.SetHornCooldownSubCommand;
 import me.Navoei.customdiscsplugin.command.SubCommands.SetRangeSubCommand;
 
@@ -29,10 +31,12 @@ public class CustomDiscCommand extends CommandAPICommand {
 
 		this.withSubcommand(new CreateSubCommand(plugin));
 		this.withSubcommand(new DownloadSubCommand(plugin));
-		this.withSubcommand(new SetRangeSubCommand(plugin));
-		this.withSubcommand(new SetHornCooldownSubCommand(plugin));
-		this.withSubcommand(new RevertSubCommand(plugin));
 		this.withSubcommand(new ReloadSubCommand(plugin));
+		this.withSubcommand(new RevertCustomModelDataSubCommand(plugin));
+		this.withSubcommand(new RevertSubCommand(plugin));
+		this.withSubcommand(new SetCustomModelDataSubCommand(plugin));
+		this.withSubcommand(new SetHornCooldownSubCommand(plugin));
+		this.withSubcommand(new SetRangeSubCommand(plugin));
 
 		this.executesPlayer(this::onCommandPlayer);
 		this.executesConsole(this::onCommandConsole);

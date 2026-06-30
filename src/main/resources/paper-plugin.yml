@@ -32,6 +32,8 @@ permissions:
       customdiscs.horncooldown: true
       customdiscs.reload: true
       customdiscs.update: true
+      customdiscs.setmodel: true
+      customdiscs.revertmodel: true
   customdiscs.create:
     description: Allows creating custom discs, horns and heads
     default: op
@@ -52,4 +54,10 @@ permissions:
     default: op
   customdiscs.update:
     description: Receives update notifications on join
+    default: op
+  customdiscs.setmodel:
+    description: Allows applying Custom Model Data to custom items
+    default: op
+  customdiscs.revertmodel:
+    description: Allows removing Custom Model Data from custom items
     default: op

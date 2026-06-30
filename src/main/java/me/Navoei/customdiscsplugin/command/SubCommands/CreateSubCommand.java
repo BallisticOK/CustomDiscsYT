@@ -47,7 +47,7 @@ public class CreateSubCommand extends CommandAPICommand {
 		this.plugin = plugin;
 		
 		this.withFullDescription(NamedTextColor.GRAY + "Creates a custom music disc.");
-		this.withUsage("/customdisc create <filename> \"Custom Lore\"");
+		this.withUsage("/cd create <filename> \"Custom Lore\"");
 		this.withPermission("customdiscs.create");
 
 		this.withArguments(new TextArgument("filename").replaceSuggestions((info, builder) -> {

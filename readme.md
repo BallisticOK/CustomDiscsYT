@@ -1,6 +1,6 @@
-# Custom Discs v6.0.1
+# Custom Discs v6.0.2
 ### For Paper, Folia and Forks (Purpur, Leaf, ...)
-### 1.21.7 to 26.1.2
+### 1.21.7 to 26.2
 
 [![GitHub Total Downloads](https://img.shields.io/github/downloads/Navoei/CustomDiscs/total?style=plastic&label=GitHub%20Downloads&color=success "Click here to download the plugin")](https://modrinth.com/plugin/customdiscs-plugin) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [![Modrinth Downloads](https://img.shields.io/modrinth/dt/customdiscs-plugin?style=plastic&label=Modrinth%20Downloads&color=success "Click here to download the plugin")](https://modrinth.com/plugin/customdiscs-plugin)
 
@@ -97,6 +97,8 @@ Downloads a specific file from the bin.
 | `customdiscs.range` | Set the audio range of a disc                                        |
 | `customdiscs.horncooldown` | Set the cooldown for custom goat horns                               |
 | `customdiscs.revert` | Revert a custom item back to its original vanilla state              |
+| `customdiscs.setmodel` | Apply a Custom Model Data to a custom item                   |
+| `customdiscs.revertmodel` | Remove a Custom Model Data from a custom item           |
 | `customdiscs.reload` | Reload the plugin configuration and language files                   |
 | `customdiscs.update` | Receive an update notification on join if a new version is available |
 
@@ -123,6 +125,70 @@ All custom data (sound file, lore, range, cooldown) is then removed.
 ```
 /cd revert
 ```
+
+---
+
+## Custom Model Data
+
+Custom Model Data lets you apply a custom visual to custom discs, goat horns, and player heads by setting an integer value that your Resource Pack maps to a different model or texture of your choice.
+
+> This feature requires a Resource Pack installed on the client. The plugin only applies the numeric value of the custom model defined in your Resource Pack for the specific item CustomDiscs handle.
+>
+> No support of any kind will be provided for creating or configuring a Resource Pack.
+
+### Enabling the feature
+
+The feature is disabled by default.
+
+You can change this by setting the `enabled` key to `true` (under `custom-model-data`), located inside `config.yml`.
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `/cd setmodel` | Open the Custom Model Data browser GUI for the custom item in hand |
+| `/cd setmodel <name>` | Apply a model by its name as defined inside `models.yml` |
+| `/cd setmodel <value>` | Apply the ResourcePack ID directly for that item |
+| `/cd revertmodel` | Remove the Custom Model Data value from the custom item in hand |
+
+> Note: `/cd revert` command also removes Custom Model Data.
+
+### Configuring models.yml
+
+`models.yml` is located in `plugins/CustomDiscs/` (and is generated on startup if not found).
+
+The material key (used in each item type) is the lowercase material name (for instance: `music_disc_cat`, `music_disc_11`, `goat_horn`, `player_head`, `zombie_head`, ...).
+
+```yaml
+disc:
+  music_disc_cat:
+    - value: 1
+      name: "Meow Record"
+    - value: 2
+      name: "Magic Music"
+  music_disc_11:
+    - value: 1
+      name: "Mistery song"
+
+horn:
+  goat_horn:
+    - value: 1
+      name: "Beware of the Horn"
+
+head:
+  player_head:
+    - value: 1
+      name: "Head me"
+  zombie_head:
+    - value: 1
+      name: "Zombie me"
+```
+
+- `value` is the integer threshold in your Resource Pack item definition.
+- `name` is the displayed label used in the GUI and for command (with autocomplete) `/cd setmodel <name>`.
+- Only the entries declared for the held item's material appear in the GUI.
+
+> Hint: Use `/cd reload` to apply changes to `models.yml` without restarting your server.
 
 ---
 
@@ -170,7 +236,7 @@ Use `/cd reload` to load it without restarting the whole server.
 ### Notice on updates behaviour
 
 When the plugin is updated with new messages:
-- **Bundled language files** (`en`, `fr`, `de`, …): new messages are automatically added to your existing files using the plugin original translation.\
+- **Bundled language files** (`en`, `fr`, `de`, ...): new messages are automatically added to your existing files using the plugin original translation.\
 Keys that you have already customised are **never** overwritten.
 - **Custom language files** (made by you): new messages are added using the default English language.\
 So keep an eye in your own lang if you don't wan't to have a mix with the default values.
@@ -271,6 +337,13 @@ custom-head-distance: 16
 # The max distance from which player heads can be heard in blocks.
 custom-head-max-distance: 256
 
+# [Custom Model Data Config]
+
+# Enable the Custom Model Data feature.
+# Configure available models in models.yml (need a resourcepack active on the server to work).
+custom-model-data:
+  enabled: false
+
 # [Update Checker Config]
 
 # Enable automatic update checks against Modrinth.
@@ -282,7 +355,7 @@ update-checker:
   channel: release
 
 # Do not modify this value — it is used for automatic config migration.
-config-version: 2
+config-version: 3
 ```
 
 ---
@@ -302,10 +375,11 @@ config-version: 2
 | **1.21.4**                         | 4.2 – [4.4](https://github.com/Navoei/CustomDiscs/releases/tag/v4.4)          | —                                                                                                 |
 | **1.21.5**                         | [4.4](https://github.com/Navoei/CustomDiscs/releases/tag/v4.4)                | —                                                                                                 |
 | **1.21.6, 1.21.7-8**               | [4.5](https://github.com/Navoei/CustomDiscs/releases/tag/v4.5)                | —                                                                                                 |
-| **1.21.7-9, 1.21.8**               | 5.0 – [6.0.1](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.1)   | (only since 1.21.8) 5.1.1 – [6.0.1](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.1) |
-| **1.21.9, 1.21.10**                | 5.1.2 – [6.0.1](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.1) | 5.1.2 – [6.0.1](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.1)                     |
-| **1.21.11**                        | 5.1.3 – [6.0.1](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.1) | 5.1.3 – [6.0.1](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.1)                     |
-| **26.1, 26.1.1, 26.1.2**           | [6.0.1](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.1)         | [6.0.1](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.1)                             |
+| **1.21.7-9, 1.21.8**               | 5.0 – [6.0.2](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.2)   | (only since 1.21.8) 5.1.1 – [6.0.2](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.2) |
+| **1.21.9, 1.21.10**                | 5.1.2 – [6.0.2](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.2) | 5.1.2 – [6.0.2](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.2)                     |
+| **1.21.11**                        | 5.1.3 – [6.0.2](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.2) | 5.1.3 – [6.0.2](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.2)                     |
+| **26.1, 26.1.1, 26.1.2**           | 6.0.0 - [6.0.2](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.2)         | 6.0.0 - [6.0.2](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.2)                             |
+| **26.2**           | 6.0.0 - [6.0.2](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.2)         | 6.0.0 - [6.0.2](https://modrinth.com/plugin/customdiscs-plugin/version/6.0.2)                             |
 
 ---
 

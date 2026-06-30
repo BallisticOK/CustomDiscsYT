@@ -21,7 +21,7 @@ public class ReloadSubCommand extends CommandAPICommand {
 		this.plugin = plugin;
 
 		this.withFullDescription(NamedTextColor.GRAY + "Reloads the plugin configuration and language files.");
-		this.withUsage("/customdisc reload");
+		this.withUsage("/cd reload");
 		this.withPermission("customdiscs.reload");
 
 		this.executesPlayer(this::onCommandPlayer);
