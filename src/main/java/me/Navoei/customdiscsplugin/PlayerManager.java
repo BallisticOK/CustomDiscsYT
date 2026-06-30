@@ -58,10 +58,14 @@ public class PlayerManager {
 
     public void playAudio(VoicechatServerApi api, Path soundFilePath, Block block, String songName, float range) {
         UUID id = UUID.nameUUIDFromBytes(block.getLocation().toString().getBytes());
+        if (playerMap.containsKey(id)) return;
 
         LocationalAudioChannel audioChannel = api.createLocationalAudioChannel(id, api.fromServerLevel(block.getWorld()), api.createPosition(block.getLocation().getX() + 0.5d, block.getLocation().getY() + 0.5d, block.getLocation().getZ() + 0.5d));
 
-        if (audioChannel == null) return;
+        if (audioChannel == null) {
+            JukeboxStateManager.unmarkJukeboxPending(block.getLocation());
+            return;
+        }
 
         audioChannel.setCategory(VoicePlugin.MUSIC_DISC_CATEGORY);
         audioChannel.setDistance(range);
@@ -97,7 +101,13 @@ public class PlayerManager {
                 inputStream = getAudioInputStream(soundFilePath, FORMAT);
                 audioPlayer = playChannel(api, audioChannel, block, inputStream, playersInRange);
             } catch (UnsupportedAudioFileException | IOException e) {
-                throw new RuntimeException(e);
+                playerMap.remove(id);
+                pluginLogger.severe("An error did occur while trying to play a music disc!");
+                pluginLogger.info("Error occurred at: " + block.getLocation());
+                if (CustomDiscs.isDebugMode()) {
+                    pluginLogger.log(Level.SEVERE, "Exception output: ", e);
+                }
+                return;
             }
             if (audioPlayer == null) {
                 playerMap.remove(id);
@@ -166,7 +176,13 @@ public class PlayerManager {
                 inputStream = getAudioInputStream(soundFilePath, FORMAT);
                 audioPlayer = playChannelHorn(api, audioChannel, hornPlayer, inputStream, playersInRange);
             } catch (UnsupportedAudioFileException | IOException e) {
-                throw new RuntimeException(e);
+                playerMap.remove(id);
+                pluginLogger.severe("An error did occur while trying to play a goat horn!");
+                pluginLogger.info("Error occurred at: " + hornPlayer.getLocation());
+                if (CustomDiscs.isDebugMode()) {
+                    pluginLogger.log(Level.SEVERE, "Exception output: ", e);
+                }
+                return;
             }
             if (audioPlayer == null) {
                 playerMap.remove(id);
@@ -235,7 +251,13 @@ public class PlayerManager {
                 inputStream = getAudioInputStream(soundFilePath, FORMAT);
                 audioPlayer = playChannelHead(api, audioChannel, block, inputStream, playersInRange);
             } catch (UnsupportedAudioFileException | IOException e) {
-                throw new RuntimeException(e);
+                playerMap.remove(id);
+                pluginLogger.severe("An error did occur while trying to play a player head!");
+                pluginLogger.info("Error occurred at: " + block.getLocation());
+                if (CustomDiscs.isDebugMode()) {
+                    pluginLogger.log(Level.SEVERE, "Exception output: ", e);
+                }
+                return;
             }
             if (audioPlayer == null) {
                 playerMap.remove(id);

@@ -20,10 +20,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDropItemEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.block.NotePlayEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
+import org.bukkit.event.block.BlockPistonRetractEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.NotePlayEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -60,8 +62,8 @@ public class HeadPlay implements Listener{
         Block headBlock = noteBlock.getRelative(BlockFace.UP);
         if (!TypeChecker.isHead(headBlock.getType())) return;
 
-        Skull skull = (Skull) headBlock.getState();
-        PersistentDataContainer persistentDataContainer = skull.getPersistentDataContainer();
+        Skull headSkull = (Skull) headBlock.getState();
+        PersistentDataContainer persistentDataContainer = headSkull.getPersistentDataContainer();
 
         if (persistentDataContainer.has(new NamespacedKey(plugin, "customhead"), PersistentDataType.STRING)) {
             event.setCancelled(true);
@@ -106,8 +108,8 @@ public class HeadPlay implements Listener{
         Block block = event.getBlockPlaced();
         if (!TypeChecker.isHead(block.getType()) && !TypeChecker.isWallHead(block.getType())) return;
         plugin.getServer().getRegionScheduler().runDelayed(plugin, block.getLocation(), task -> {
-            Skull skull = (Skull) block.getState();
-            PersistentDataContainer blockPDC = skull.getPersistentDataContainer();
+            Skull headSkull = (Skull) block.getState();
+            PersistentDataContainer blockPDC = headSkull.getPersistentDataContainer();
 
             NamespacedKey headKey = new NamespacedKey(plugin, "customhead");
             NamespacedKey loreKey = new NamespacedKey(plugin, "headlore");
@@ -128,7 +130,7 @@ public class HeadPlay implements Listener{
                 blockPDC.set(rangeKey, PersistentDataType.FLOAT, rangeValue);
             }
 
-            skull.update(true, true);
+            headSkull.update(true, true);
         }, 1L);
     }
 
@@ -153,9 +155,9 @@ public class HeadPlay implements Listener{
     public void onHeadDrop(BlockDropItemEvent event) {
         BlockState blockState = event.getBlockState();
 
-        if (!(blockState instanceof Skull skull)) return;
+        if (!(blockState instanceof Skull headSkull)) return;
 
-        PersistentDataContainer blockPDC = skull.getPersistentDataContainer();
+        PersistentDataContainer blockPDC = headSkull.getPersistentDataContainer();
 
         NamespacedKey headKey = new NamespacedKey(plugin, "customhead");
         NamespacedKey loreKey = new NamespacedKey(plugin, "headlore");
@@ -214,8 +216,8 @@ public class HeadPlay implements Listener{
             Block explodedBlock = iterator.next();
             if (!TypeChecker.isHead(explodedBlock.getType()) && !TypeChecker.isWallHead(explodedBlock.getType())) continue;
 
-            Skull skull = (Skull) explodedBlock.getState();
-            PersistentDataContainer persistentDataContainer = skull.getPersistentDataContainer();
+            Skull headSkull = (Skull) explodedBlock.getState();
+            PersistentDataContainer persistentDataContainer = headSkull.getPersistentDataContainer();
             if (!persistentDataContainer.has(headKey, PersistentDataType.STRING)) continue;
 
             Block noteBlockBelow = explodedBlock.getRelative(BlockFace.DOWN);
@@ -298,12 +300,42 @@ public class HeadPlay implements Listener{
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onHeadPistonExtend(BlockPistonExtendEvent event) {
+        onHeadPiston(event.getBlocks());
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onHeadPistonRetract(BlockPistonRetractEvent event) {
+        onHeadPiston(event.getBlocks());
+    }
+
+    private void onHeadPiston(List<Block> movedBlocks) {
+        NamespacedKey headKey = new NamespacedKey(plugin, "customhead");
+        for (Block movedBlock : movedBlocks) {
+            if (TypeChecker.isHead(movedBlock.getType())) {
+                Block noteBlockBelow = movedBlock.getRelative(BlockFace.DOWN);
+                if (noteBlockBelow.getType() != Material.NOTE_BLOCK) continue;
+                Skull headSkull = (Skull) movedBlock.getState();
+                if (!headSkull.getPersistentDataContainer().has(headKey, PersistentDataType.STRING)) continue;
+                playerManager.stopDisc(noteBlockBelow);
+            }
+            if (movedBlock.getType() == Material.NOTE_BLOCK) {
+                Block headAbove = movedBlock.getRelative(BlockFace.UP);
+                if (!TypeChecker.isHead(headAbove.getType())) continue;
+                Skull headSkull = (Skull) headAbove.getState();
+                if (!headSkull.getPersistentDataContainer().has(headKey, PersistentDataType.STRING)) continue;
+                playerManager.stopDisc(movedBlock);
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onHeadFluidDestroy(BlockFromToEvent event) {
         Block block = event.getToBlock();
         if (!TypeChecker.isHead(block.getType()) && !TypeChecker.isWallHead(block.getType())) return;
 
-        Skull skull = (Skull) block.getState();
-        PersistentDataContainer persistentDataContainer = skull.getPersistentDataContainer();
+        Skull headSkull = (Skull) block.getState();
+        PersistentDataContainer persistentDataContainer = headSkull.getPersistentDataContainer();
         NamespacedKey headKey = new NamespacedKey(plugin, "customhead");
         if (!persistentDataContainer.has(headKey, PersistentDataType.STRING)) return;
 

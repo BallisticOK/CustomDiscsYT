@@ -37,7 +37,7 @@ public class DownloadSubCommand extends CommandAPICommand {
 		this.plugin = plugin;
 
 		this.withFullDescription(NamedTextColor.GRAY + "Downloads a file from a given URL.");
-		this.withUsage("/customdisc download <url> <filename.extension>");
+		this.withUsage("/cd download <url> <filename.extension>");
 		this.withPermission("customdiscs.download");
 
 		this.withArguments(new TextArgument("url"));

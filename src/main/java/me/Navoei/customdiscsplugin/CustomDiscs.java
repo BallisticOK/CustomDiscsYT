@@ -2,6 +2,7 @@ package me.Navoei.customdiscsplugin;
 
 import me.Navoei.customdiscsplugin.command.CustomDiscCommand;
 import me.Navoei.customdiscsplugin.event.JukeBox;
+import me.Navoei.customdiscsplugin.event.ModelSelector;
 import me.Navoei.customdiscsplugin.event.HeadPlay;
 import me.Navoei.customdiscsplugin.event.HornPlay;
 import me.Navoei.customdiscsplugin.language.Lang;
@@ -55,7 +56,7 @@ import java.util.logging.Logger;
 
 public final class CustomDiscs extends JavaPlugin {
 	static CustomDiscs instance;
-	private static final int CONFIG_VERSION = 2;
+	private static final int CONFIG_VERSION = 3;
 
 	// For my own memo (Athar) - Implemented during development cycle where keys changed, isn't needed for now by could be in the future, so keeping it just in case.
 	// Mapping Keys/Values for when a default value need to be overridden upon update.
@@ -77,6 +78,7 @@ public final class CustomDiscs extends JavaPlugin {
     private static final LegacyComponentSerializer LegacyComponentAmpersand = LegacyComponentSerializer.legacyAmpersand();
     private static final List<String> BUNDLED_LANGS = List.of("en", "fr", "de", "ru", "es", "pt", "zh", "pl", "nl", "it", "tr", "cs", "hu", "ko", "tt");
 	public static final List<String> VALID_HORN_INSTRUMENTS = List.of("ponder_goat_horn", "sing_goat_horn", "seek_goat_horn", "feel_goat_horn", "admire_goat_horn", "call_goat_horn", "yearn_goat_horn", "dream_goat_horn");
+	public static boolean customModelDataEnable = true;
 	public static boolean musicDiscEnable = true;
 	public static boolean musicDiscPlayingEnable = true;
 	public float musicDiscDistance;
@@ -122,6 +124,11 @@ public final class CustomDiscs extends JavaPlugin {
 		migrateConfig();
 		loadLangs();
 		loadConfigValues();
+
+		saveResource("models.yml", false);
+		if (isCustomModelDataEnable()) {
+			ModelSelectorManager.loadModels(getDataFolder(), pluginLogger);
+		}
 
 		// Checking server version and display console message in case the server is not officially supported by us
         ServerVersionChecker serverVersionChecker = new ServerVersionChecker(this);
@@ -218,6 +225,7 @@ public final class CustomDiscs extends JavaPlugin {
 	 */
 	private void loadConfigValues() {
 		debugMode = getConfig().getBoolean("debugMode", false);
+		customModelDataEnable = getConfig().getBoolean("custom-model-data.enabled", false);
 		musicDiscEnable = getConfig().getBoolean("music-disc-enable");
 		musicDiscPlayingEnable = getConfig().getBoolean("music-disc-playing-enable");
 		musicDiscDistance = getConfig().getInt("music-disc-distance");
@@ -312,6 +320,10 @@ public final class CustomDiscs extends JavaPlugin {
 			getServer().getPluginManager().registerEvents(new HornPlay(), this);
 		}
 
+		if (isCustomModelDataEnable()) {
+			getServer().getPluginManager().registerEvents(new ModelSelector(this), this);
+		}
+
 		getServer().getPluginManager().registerEvents(new Listener() {
 			@EventHandler
 			public void onJoin(PlayerJoinEvent event) {
@@ -337,6 +349,9 @@ public final class CustomDiscs extends JavaPlugin {
 	public void reloadPlugin() {
 		reloadConfig();
 		loadConfigValues();
+		if (isCustomModelDataEnable()) {
+			ModelSelectorManager.loadModels(getDataFolder(), pluginLogger);
+		}
 		loadLangs();
 		HandlerList.unregisterAll(this);
 		registerListeners();
@@ -459,6 +474,13 @@ public final class CustomDiscs extends JavaPlugin {
 	 * @return The boolean value of debugMode.
 	 */
 	public static boolean isDebugMode() { return debugMode; }
+
+	/**
+	 * Get the customModelDataEnable configuration.
+	 *
+	 * @return The boolean value of customModelDataEnable.
+	 */
+	public static boolean isCustomModelDataEnable() { return customModelDataEnable; }
 
 	/**
 	 * Get the musicDiscPlayingEnable configuration.

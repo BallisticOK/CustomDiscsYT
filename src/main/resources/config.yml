@@ -77,6 +77,13 @@ custom-head-distance: 16
 # The max distance from which player heads can be heard in blocks.
 custom-head-max-distance: 256
 
+# [Custom Model Data Config]
+
+# Enable the Custom Model Data feature.
+# Configure available models in models.yml (need a resourcepack active on the server to work).
+custom-model-data:
+  enabled: false
+
 # [Update Checker Config]
 
 # Enable automatic update checks against Modrinth.
@@ -88,4 +95,4 @@ update-checker:
   channel: release
 
 # Do not modify this value — it is used for automatic config migration.
-config-version: 2
+config-version: 3

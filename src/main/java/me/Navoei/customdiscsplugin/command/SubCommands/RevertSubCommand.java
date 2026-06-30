@@ -1,8 +1,8 @@
 package me.Navoei.customdiscsplugin.command.SubCommands;
 
 import me.Navoei.customdiscsplugin.CustomDiscs;
-import me.Navoei.customdiscsplugin.utils.TypeChecker;
 import me.Navoei.customdiscsplugin.language.Lang;
+import me.Navoei.customdiscsplugin.utils.TypeChecker;
 
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.executors.CommandArguments;
@@ -34,7 +34,7 @@ public class RevertSubCommand extends CommandAPICommand {
 		this.plugin = plugin;
 
 		this.withFullDescription(NamedTextColor.GRAY + "Reverts a custom item back to its original state.");
-		this.withUsage("/customdisc revert");
+		this.withUsage("/cd revert");
 		this.withPermission("customdiscs.revert");
 
 		this.executesPlayer(this::onCommandPlayer);

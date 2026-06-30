@@ -19,6 +19,10 @@ public class JukeboxStateManager {
         pendingJukeboxLocations.add(jukeboxLocation);
     }
 
+    public static void unmarkJukeboxPending(Location jukeboxLocation) {
+        pendingJukeboxLocations.remove(jukeboxLocation);
+    }
+
     public static boolean isCustomDiscLocation(Location jukeboxLocation) {
         return pendingJukeboxLocations.contains(jukeboxLocation) || playingJukeboxLocations.contains(jukeboxLocation);
     }

@@ -47,6 +47,7 @@ public class HopperManager implements Listener {
 
         if (destinationInventory.getLocation() == null) return;
         if (!destinationInventory.getType().equals(InventoryType.JUKEBOX)) return;
+        if (!destinationInventory.isEmpty()) return;
 
         ItemStack eventItemStack = event.getItem();
 

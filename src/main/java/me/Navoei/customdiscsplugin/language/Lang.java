@@ -40,7 +40,16 @@ public enum Lang {
     REVERT_SUCCESS("revert-success", "&aItem successfully reverted."),
     REVERT_NOT_CUSTOM("revert-not-custom", "&cThe item in your hand is not a custom disc, horn or head."),
     RELOAD_SUCCESS("reload-success", "&aConfiguration reloaded successfully."),
-    UPDATE_AVAILABLE("update-available", "&eA new version of CustomDiscs is available: &6%latest_version% &7(current: %current_version%)");
+    UPDATE_AVAILABLE("update-available", "&eA new version of CustomDiscs is available: &6%latest_version% &7(current: %current_version%)"),
+    SET_MODEL_SUCCESS("set-model-success", "&aCustom Model Data successfully applied."),
+    REVERT_MODEL_SUCCESS("revert-model-success", "&aCustom Model Data successfully removed."),
+    REVERT_MODEL_NOT_SET("revert-model-not-set", "&cThis item has no Custom Model Data set."),
+    CUSTOM_MODEL_DATA_DISABLED("custom-model-data-disabled", "&7Custom Model Data feature is disabled in the configuration."),
+    SET_MODEL_INVALID("set-model-invalid", "&cUnknown model name. Use a name or a valid value from models.yml."),
+    MODEL_SELECTOR_EMPTY("model-selector-empty", "&cNo models are configured in models.yml for this item type."),
+    MODEL_SELECTOR_TITLE("model-selector-title", "&8Custom Model Data"),
+    MODEL_SELECTOR_PREVIOUS("model-selector-previous", "< Previous"),
+    MODEL_SELECTOR_NEXT("model-selector-next", "Next >");
 
     private final String path;
     private final String def;
